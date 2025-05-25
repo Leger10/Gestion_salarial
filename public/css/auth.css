@@ -1,0 +1,403 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+form {
+    background: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 1em;
+    color: #333;
+    font-size: 24px;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5em;
+    color: #555;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff;
+}
+
+button {
+    width: 100%;
+    padding: 0.5em;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    margin-bottom: 1em;
+    text-align: center;
+}
+.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    color: #555;
+}
+
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.success-message {
+    color: #28a745;
+    text-align: center;
+}
+
+.error-message {
+    color: #dc3545;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    color: #dc3545;
+    margin: 5px 0;
+}
+
+p a {
+    color: #007bff;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+.progress-bar {
+    transition: width 0.6s ease;
+}
+.item {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-header-action a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.card-header-action a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+.stats-type {
+    font-size: 1.2em; /* Taille de la police pour le titre */
+}
+
+.small-value {
+    font-size: 0.9em; /* Taille plus petite pour la valeur dynamique */
+}
+/* auth.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    margin: 0;
+    padding: 20px;
+}
+
+.app-card {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.app-card-title {
+    margin: 0;
+}
+
+.form-select {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+body {
+    background-color: #f8f9fa; /* Couleur de fond douce */
+    font-family: Arial, sans-serif; /* Police simple */
+}
+
+.container {
+    max-width: 900px; /* Largeur maximale du conteneur */
+    margin: 20px auto; /* Centrer le conteneur */
+    padding: 20px; /* Espacement interne */
+    background-color: #fff; /* Fond blanc pour le conteneur */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+h1, h2 {
+    color: #343a40; /* Couleur de texte sombre */
+    margin-bottom: 20px; /* Espacement en bas des titres */
+}
+
+.table {
+    width: 100%; /* Largeur complète */
+    border-collapse: collapse; /* Supprimer les bordures doubles */
+}
+
+.table th, .table td {
+    padding: 10px; /* Espacement interne des cellules */
+    text-align: left; /* Alignement du texte à gauche */
+    border-bottom: 1px solid #dee2e6; /* Bordure inférieure */
+}
+
+.table th {
+    background-color: #007bff; /* Couleur de fond des en-têtes */
+    color: white; /* Couleur du texte des en-têtes */
+}
+
+.btn {
+    padding: 10px 15px; /* Espacement interne des boutons */
+    border-radius: 5px; /* Coins arrondis des boutons */
+    text-decoration: none; /* Supprimer le soulignement */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Couleur principale */
+    color: white; /* Couleur du texte */
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Couleur d'avertissement */
+    color: black; /* Couleur du texte */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Couleur de danger */
+    color: white; /* Couleur du texte */
+}
+
+.btn-info {
+    background-color: #17a2b8; /* Couleur d'information */
+    color: white; /* Couleur du texte */
+}
+
+.alert {
+    padding: 15px; /* Espacement interne de l'alerte */
+    border-radius: 5px; /* Coins arrondis */
+    margin-bottom: 20px; /* Espacement en bas de l'alerte */
+}
+
+.alert-success {
+    background-color: #d4edda; /* Couleur de fond pour succès */
+    color: #155724; /* Couleur du texte */
+}
+
+        .help-section {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .error-messages {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .card {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideIn 0.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loader-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+   
+.app-card-body {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.app-card-body:hover {
+    transform: scale(1.05);  /* Agrandir légèrement la carte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Ajoute de l'ombre pour un effet de profondeur */
+}

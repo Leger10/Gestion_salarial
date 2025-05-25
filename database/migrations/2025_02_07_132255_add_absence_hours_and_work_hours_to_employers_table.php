@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+{
+    Schema::table('employers', function (Blueprint $table) {
+        $table->decimal('Absence', 8, 2)->default(0);  // Exemple pour les heures d'absence
+        $table->decimal('HeuresTravail', 8, 2)->default(0);      // Exemple pour les heures de travail
+    });
+}
+
+public function down()
+{
+    Schema::table('employers', function (Blueprint $table) {
+        $table->dropColumn('absence_hours');
+        $table->dropColumn('work_hours');
+    });
+}
+
+};
