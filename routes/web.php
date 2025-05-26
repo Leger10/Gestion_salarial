@@ -44,8 +44,6 @@ Route::post('/', [AuthController::class, 'handleLogin'])->name('handleLogin');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
 
-
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
    // Ressources pour les employeurs
@@ -102,6 +100,15 @@ Route::post('/employers/{employerId}/ajouter-heures', [EmployerController::class
 Route::get('/employers/{employerId}/heures/mois', [HeuresTravailController::class, 'monthly'])->name('heures_travail.monthly');
 // Route pour afficher la vue de confirmation avant suppression
 
+Route::get('/departements/export', [DepartementController::class, 'export'])->name('departements.export');
+Route::get('/departements/search', [DepartementController::class, 'search'])->name('departements.search'); // <-- Remontée ici
+Route::get('/departements', [DepartementController::class, 'index'])->name('departements.index');
+Route::get('/departements/create', [DepartementController::class, 'create'])->name('departements.create');
+Route::get('/departements/{departement}/edit', [DepartementController::class, 'edit'])->name('departements.edit');
+Route::post('/departements', [DepartementController::class, 'store'])->name('departements.store');
+Route::get('/departements/{departement}/destroy', [DepartementController::class, 'destroy'])->name('departements.destroy');
+
+
         Route::prefix('configurations')->group(function () {
         Route::get('/', [ConfigurationController::class, 'index'])->name('configurations.index');
         Route::get('/create', [ConfigurationController::class, 'create'])->name('configurations.create');
@@ -112,32 +119,7 @@ Route::get('/employers/{employerId}/heures/mois', [HeuresTravailController::clas
 });
 
 
-// Routes pour les départements
-Route::prefix('departements')->group(function () {
-    // Route pour la liste des départements
-    Route::get('/', [DepartementController::class, 'index'])->name('departements.index');
-    
-    // Route pour afficher le formulaire de création
-    Route::get('/create', [DepartementController::class, 'create'])->name('departements.create');
-    
-    // Route pour enregistrer un département (POST)
-    Route::post('/', [DepartementController::class, 'store'])->name('departements.store'); 
-    
-    // Route pour afficher un département spécifique
-    Route::get('/{departement}', [DepartementController::class, 'show'])->name('departements.show');
-    
-    // Route pour afficher le formulaire d'édition d'un département
-    Route::get('/{departement}/edit', [DepartementController::class, 'edit'])->name('departements.edit');
-    
-    // Route pour mettre à jour un département (PUT)
-    Route::put('/{departement}', [DepartementController::class, 'update'])->name('departements.update');
-    
-    // Route pour supprimer un département (DELETE)
-    Route::delete('/{departement}', [DepartementController::class, 'destroy'])->name('departements.destroy');
-    
-    // Route pour rechercher un département
-    Route::get('/search', [DepartementController::class, 'search'])->name('departements.search');
-});
+
 // Routes pour les admin
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -145,7 +127,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
     Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
     Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
-
+    Route::get('/admin/search', [AdminController::class, 'search'])->name('admin.search');
     // Route pour afficher un administrateur spécifique
     Route::get('/{id}', [AdminController::class, 'show'])->name('admin.show'); // Utilisation correcte de l'ID
 
@@ -227,9 +209,10 @@ Route::prefix('payment')->group(function () {
     // Dans routes/web.php
 Route::delete('/payments/{id}', [PayementController::class, 'destroy'])->name('paiements.destroy');
 Route::get('download-invoice/{payment}', [PayementController::class, 'downloadInvoice'])->name('payment.download');
+
 Route::get('/payment/{payment}/download-invoice', [PayementController::class, 'downloadInvoice'])->name('payments.downloadInvoice');
 });
-
+Route::get('/paiements/export', [PayementController::class, 'export'])->name('paiements.export');
 // Routes d'aide
 Route::get('/aide', [HelpController::class, 'index'])->name('aide.index'); // Afficher la page d'aide
 Route::post('/aide', [HelpController::class, 'contact'])->name('aide.contact'); // Soumettre le formulaire de contact
@@ -241,3 +224,5 @@ Route::post('/import-users', [PayementController::class, 'importUsers']);
 Route::get('payments/export', function () {
     return Excel::download(new PaymentsExport, 'payments.xlsx');
 })->name('payments.export');
+
+Route::post('/employers/payer', [EmployerController::class, 'payerEmployes'])->name('employers.payer');

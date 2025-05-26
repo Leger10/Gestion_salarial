@@ -119,6 +119,13 @@ class Employer extends Model
     public function loadView($view, $data = [])
     {
         return view($view, $data);
+    }public function routeNotificationForMail($notification)
+{
+    return $this->email;
+}
+    public function routeNotificationForSms($notification)
+    {
+        return $this->phone;
     }
 }
 

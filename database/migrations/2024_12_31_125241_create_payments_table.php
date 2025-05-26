@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('reference');
             $table->foreignId('employer_id')->constrained('employers')->onDelete('cascade');
-            
+        
             // Salary related information
-            $table->decimal('montant_journalier', 10, 2);
+           $table->decimal('montant_journalier', 10, 2)->nullable();
             $table->unsignedInteger('heures_travail');
             $table->unsignedInteger('heures_totales');
             $table->unsignedInteger('heures_absence');

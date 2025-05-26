@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,20 @@
             margin: 0;
             padding: 0;
             background-color: #f1f1f1;
-            font-size: 12px; /* Réduit la taille pour tenir sur une page */
+            font-size: 12px;
+            /* Réduit la taille pour tenir sur une page */
             line-height: 1.5;
             color: #333;
-            position: relative; /* Pour positionner le texte "PAYER" */
+            position: relative;
+            /* Pour positionner le texte "PAYER" */
         }
 
         /* Forcer le contenu à tenir sur une seule page */
         @page {
-            size: A4; /* Taille A4 pour impression */
-            margin: 10mm 15mm; /* Réduit les marges de la page */
+            size: A4;
+            /* Taille A4 pour impression */
+            margin: 10mm 15mm;
+            /* Réduit les marges de la page */
         }
 
         .container {
@@ -64,7 +69,8 @@
         .title {
             font-size: 20px;
             font-weight: bold;
-            color: #4CAF50; /* Couleur verte */
+            color: #4CAF50;
+            /* Couleur verte */
             text-align: center;
             margin-top: 20px;
             margin-bottom: 20px;
@@ -86,9 +92,11 @@
             border-collapse: collapse;
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             border: 1px solid #ddd;
-            padding: 8px; /* Espacement réduit */
+            padding: 8px;
+            /* Espacement réduit */
             text-align: left;
             font-size: 12px;
         }
@@ -103,7 +111,8 @@
         }
 
         .table tr:nth-child(even) td {
-            background-color: #f9f9f9; /* Alternance des couleurs */
+            background-color: #f9f9f9;
+            /* Alternance des couleurs */
         }
 
         /* Footer Section */
@@ -141,12 +150,15 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg); /* Rotation pour incliner de gauche vers droite */
+            transform: translate(-50%, -50%) rotate(45deg);
+            /* Rotation pour incliner de gauche vers droite */
             font-size: 150px;
             font-weight: bold;
-            color: rgba(0, 128, 0, 0.1); /* Vert transparent */
+            color: rgba(0, 128, 0, 0.1);
+            /* Vert transparent */
             text-align: center;
-            pointer-events: none; /* Assurez-vous que ce texte ne gêne pas les autres éléments */
+            pointer-events: none;
+            /* Assurez-vous que ce texte ne gêne pas les autres éléments */
         }
 
         /* Ajustement pour les petits écrans */
@@ -154,33 +166,39 @@
             .container {
                 padding: 10px;
             }
+
             .logo {
                 width: 100px;
             }
+
             .title {
                 font-size: 18px;
             }
-            .table th, .table td {
+
+            .table th,
+            .table td {
                 font-size: 11px;
                 padding: 6px;
             }
+
             .pay-status {
                 font-size: 14px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header Section -->
         <div class="company-info">
             <!-- Affichage du nom de l'entreprise -->
             <h3><strong>Entreprise :</strong> {{ $appName->value ?? 'Non défini' }}</h3>
-        
+
             <!-- Insertion du logo -->
-           
+
         </div>
-        
+
     </div>
 
     <!-- Bulletin Title -->
@@ -195,40 +213,40 @@
 
     <!-- Détails du salaire -->
     <div class="section-title">Détails du salaire</div>
-   <table class="table table-striped mt-2">
-    <tr>
-        <th>Montant journalier :</th>
-        <td>{{ number_format($employer->montant_journalier, 0, ',', ' ') }} CFA</td>
-    </tr>
-    <tr>
-        <th>Heures de travail par jour :</th>
-        <td>{{ number_format($employer->heures_travail, 0, ',', ' ') }} heure(s)</td>
-    </tr>
-    <tr>
-        <th>Heures totales de travail :</th>
-        <td>{{ number_format($totalHeuresTravail, 0, ',', ' ') }} heure(s)</td>
-    </tr>
-    <tr>
-        <th>Heures d'absence :</th>
-        <td>{{ number_format($absences, 0, ',', ' ') }} heure(s)</td>
-    </tr>
-    <tr>
-        <th>Heures supplémentaires :</th>
-        <td>{{ number_format($heures_supplementaires, 0, ',', ' ') }} heure(s)</td>
-    </tr>
-    <tr>
-        <th>Salaire total avant taxes :</th>
-        <td>{{ number_format($salaire_total_avant_taxes, 0, ',', ' ') }} CFA</td>
-    </tr>
-    <tr>
-        <th>Taxe retenue :</th>
-        <td>{{ number_format($taxe, 0, ',', ' ') }} CFA</td>
-    </tr>
-    <tr>
-        <th>Salaire net à payer :</th>
-        <td>{{ number_format($salaire_net, 0, ',', ' ') }} CFA</td>
-    </tr>
-</table>
+    <table class="table table-striped mt-2">
+        <tr>
+            <th>Montant journalier :</th>
+            <td>{{ number_format($employer->montant_journalier, 0, ',', ' ') }} CFA</td>
+        </tr>
+        <tr>
+            <th>Heures de travail par jour :</th>
+            <td>{{ number_format($employer->heures_travail, 0, ',', ' ') }} heure(s)</td>
+        </tr>
+        <tr>
+            <th>Heures totales de travail :</th>
+            <td>{{ number_format($totalHeuresTravail, 0, ',', ' ') }} heure(s)</td>
+        </tr>
+        <tr>
+            <th>Heures d'absence :</th>
+            <td>{{ number_format($absences, 0, ',', ' ') }} heure(s)</td>
+        </tr>
+        <tr>
+            <th>Heures supplémentaires :</th>
+            <td>{{ number_format($heures_supplementaires, 0, ',', ' ') }} heure(s)</td>
+        </tr>
+        <tr>
+            <th>Salaire total avant taxes :</th>
+            <td>{{ number_format($salaire_total_avant_taxes, 0, ',', ' ') }} CFA</td>
+        </tr>
+        <tr>
+            <th>Taxe retenue :</th>
+            <td>{{ number_format($taxe, 0, ',', ' ') }} CFA</td>
+        </tr>
+        <tr>
+            <th>Salaire net à payer :</th>
+            <td>{{ number_format($salaire_net, 0, ',', ' ') }} CFA</td>
+        </tr>
+    </table>
 
     <p><strong>Date de paiement :</strong> {{ $formattedPaymentDate }}</p>
     <p>Merci pour votre confiance !</p>
@@ -237,20 +255,21 @@
     <div class="footer">
         <!-- Signature -->
         @if(file_exists(public_path('storage/app/public/assets/images/paye-logo.jpg')))
-            <img src="{{ asset('storage/app/public/assets/images/paye-logo.jpg') }}" alt="Signature" class="signature">
+        <img src="{{ asset('storage/app/public/assets/images/paye-logo.jpg') }}" alt="Signature" class="signature">
         @else
-            <p>Signature</p>
+        <p>Signature</p>
         @endif
 
         <!-- Cachet -->
         @if(file_exists(public_path('assets/images/stamp.png')))
-            <img src="{{ asset('assets/images/OIP.jpeg') }}" alt="Cachet" class="stamp">
+        <img src="{{ asset('assets/images/OIP.jpeg') }}" alt="Cachet" class="stamp">
         @else
-        
+
         @endif
     </div>
 
     <!-- Texte "PAYER" en filigrane -->
     <div class="pay-watermark">PAYER</div>
 </body>
+
 </html>

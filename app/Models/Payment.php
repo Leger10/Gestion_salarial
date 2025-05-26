@@ -29,7 +29,12 @@ class Payment extends Model
         'status',
         'month',
         'year',
+
     ];
+    protected $casts = [
+    'salaire_net' => 'decimal:2',
+    'done_time' => 'datetime'
+];
 
     // Les attributs qui doivent être cachés pour les tableaux
     protected $hidden = [

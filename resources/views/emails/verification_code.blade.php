@@ -15,7 +15,10 @@
     <a href="{{ route('auth.defineAccess', ['email' => $user->email]) }}" style="background: #4F46E5; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
         Valider mon compte
     </a>
-    
+    <div class="footer">
+            <p>Cordialement,<br>L'équipe <strong>{{ config('app.name') }}</strong></p>
+            <p>Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet email.</p>
+        </div>
     <p>Merci,<br>{{ config('app.name') }}</p>
 </body>
 </html>

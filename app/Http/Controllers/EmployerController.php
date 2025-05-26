@@ -598,16 +598,22 @@ public function updateOvertime($employerId, $overtimeId, Request $request)
 }
 
 
-
 public function search(Request $request)
 {
-    $searchQuery = $request->input('search');
-    $employers = Employer::where('nom', 'LIKE', "%{$searchQuery}%")
-                         ->orWhere('prenom', 'LIKE', "%{$searchQuery}%")
-                         ->get();
+    $search = $request->input('search');
+    
+    $employers = Employer::with('payments')
+        ->where('nom', 'LIKE', "%$search%")
+        ->orWhere('prenom', 'LIKE', "%$search%")
+        ->orWhereHas('payments', function($query) use ($search) {
+            $query->where('reference', 'LIKE', "%$search%");
+        })
+        ->paginate(10);
 
-    // Retourne les résultats au format JSON
-    return response()->json(['employers' => $employers]);
+    return response()->json([
+        'employers' => $employers->items(),
+        'total' => $employers->total()
+    ]);
 }
 
 

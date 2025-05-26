@@ -22,41 +22,42 @@
     <div class="col-auto">
         <div class="page-utilities">
             <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                <!-- Formulaire de recherche -->
-                <form action="{{ route('employers.search') }}" method="GET" class="col-auto d-flex">
+                <!-- Formulaire de recherche amélioré -->
+                <form action="{{ route('employers.index') }}" method="GET" class="col-auto d-flex gap-2">
                     <div class="input-group">
                         <input type="text" id="search" name="search" class="form-control" 
-                               placeholder="Rechercher par nom ou prénom" value="{{ request('search') }}">
+                               placeholder="Nom, Prénom ou Référence"
+                               value="{{ request('search') }}"
+                               aria-label="Recherche">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-search"></i> Rechercher
                         </button>
-                        
-                        @if(request()->has('search'))
-                        <a href="{{ route('employers.index') }}" class="btn btn-secondary ms-2">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        @endif
                     </div>
+                    @if(request()->has('search'))
+                    <a href="{{ route('employers.index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-times"></i> Réinitialiser
+                    </a>
+                    @endif
                 </form>
 
                 <!-- Filtre par période -->
                 <div class="col-auto">
-                    <form action="{{ route('employers.index') }}" method="GET" class="d-flex">
-                        <select class="form-select" name="period" onchange="this.form.submit()">
-                            <option value="" {{ !request('period') ? 'selected' : '' }}>Tous</option>
+                    <form action="{{ route('employers.index') }}" method="GET">
+                        <select class="form-select" name="period">
+                            <option value="">Toutes périodes</option>
                             <option value="week" {{ request('period') == 'week' ? 'selected' : '' }}>Cette Semaine</option>
                             <option value="month" {{ request('period') == 'month' ? 'selected' : '' }}>Ce Mois</option>
                             <option value="3months" {{ request('period') == '3months' ? 'selected' : '' }}>3 Derniers Mois</option>
                             <option value="6months" {{ request('period') == '6months' ? 'selected' : '' }}>6 Derniers Mois</option>
                         </select>
+                        <button type="submit" class="btn btn-link d-none">Filtrer</button>
                     </form>
                 </div>
 
-                <!-- Bouton Ajouter (visible pour Super Admin et Utilisateur) -->
                 @if ($isSuperAdmin || $isUser)
                 <div class="col-auto">
                     <a class="btn app-btn-primary" href="{{ route('employers.create') }}">
-                        <i class="fas fa-plus me-2"></i> Ajouter un employé
+                        <i class="fas fa-plus me-2"></i> Nouvel employé
                     </a>
                 </div>
                 @endif
@@ -65,178 +66,141 @@
     </div>
 </div>
 
-<!-- Le reste de votre contenu (tableau, pagination, etc.) ira ici -->
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+<div class="app-card app-card-orders-table shadow-sm mb-5">
+    <div class="app-card-body">
+        <div class="table-responsive">
+            <table class="table app-table-hover mb-0 text-left table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th>Nom complet</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Référence paiement</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($employers as $employer)
+                    <tr>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm me-2">
+                                    <div class="avatar-title bg-light rounded-circle">
+                                        {{ strtoupper(substr($employer->prenom, 0, 1)) }}{{ strtoupper(substr($employer->nom, 0, 1)) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="fw-medium">{{ $employer->prenom }} {{ $employer->nom }}</div>
+                                    <div class="text-muted small">Inscrit le {{ $employer->created_at->format('d/m/Y') }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ $employer->email ?? 'N/A' }}</td>
+                        <td>{{ $employer->phone ?? 'N/A' }}</td>
+                        <td>
+                            @if($employer->latestPayment)
+                            <span class="badge bg-primary">
+                                {{ $employer->latestPayment->reference }}
+                            </span>
+                            @else
+                            <span class="badge bg-secondary">Aucun paiement</span>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex gap-2 justify-content-center">
+                                <a href="{{ route('employers.edit', $employer->id) }}" 
+                                   class="btn btn-sm btn-outline-warning"
+                                   data-bs-toggle="tooltip"
+                                   title="Modifier">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+
+                                <a href="{{ route('employers.show', $employer->id) }}" 
+                                   class="btn btn-sm btn-outline-info"
+                                   data-bs-toggle="tooltip"
+                                   title="Détails">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
+                                <a href="{{ route('employers.add_overtime', $employer->id) }}" 
+                                   class="btn btn-sm btn-outline-primary"
+                                   data-bs-toggle="tooltip"
+                                   title="Heures supplémentaires">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span class="badge bg-info ms-1">
+                                        {{ $employer->total_overtime ?? 0 }}h
+                                    </span>
+                                </a>
+
+                                <a href="{{ route('absences.show', $employer->id) }}" 
+                                   class="btn btn-sm btn-outline-success"
+                                   data-bs-toggle="tooltip"
+                                   title="Absences">
+                                    <i class="fas fa-minus-circle"></i>
+                                    <span class="badge bg-danger ms-1">
+                                        {{ $employer->total_absence_heures }}h
+                                    </span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center py-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="text-muted mb-2">Aucun employé trouvé</div>
+                                <a href="{{ route('employers.create') }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-plus me-1"></i> Ajouter un employé
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            @if($employers->hasPages())
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="text-muted small">
+                    Affichage de {{ $employers->firstItem() }} à {{ $employers->lastItem() }} sur {{ $employers->total() }} résultats
+                </div>
+                <div class="pagination justify-content-end">
+                    {{ $employers->withQueryString()->links() }}
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
 
 @else
 <div class="alert alert-danger">
-    Vous n'avez pas les permissions nécessaires pour accéder à cette page.
+    <i class="fas fa-lock me-2"></i> Accès restreint - Permissions insuffisantes
 </div>
 @endif
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 
-<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all"
-        role="tab" aria-controls="orders-all" aria-selected="true">Liste des employés</a>
-    <a class="flex-sm-fill text-sm-center nav-link" id="orders-daily-tab" data-bs-toggle="tab" href="#orders-daily"
-        role="tab" aria-controls="orders-daily" aria-selected="false">Montant journalier</a>
-</nav>
-
-<div class="tab-content" id="orders-table-tab-content">
-    <!-- Liste des Employeurs -->
-    <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-        <div class="app-card app-card-orders-table shadow-sm mb-5">
-            <div class="app-card-body">
-                <div class="table-responsive">
-                    <table class="table app-table-hover mb-0 text-left table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="cell">#</th>
-                                <th class="cell" style="color: green">Employés enregistrés</th>
-                                <th class="cell">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="employerResults">
-                            @forelse ($employers as $employer)
-                                <tr>
-                                    <td class="cell">{{ $loop->iteration }}</td>
-                                    <td class="cell">{{ $employer->nom }} {{ $employer->prenom }}</td>
-                                    <td class="cell">
-                                        <a href="{{ route('employers.edit', $employer->id) }}" class="btn btn-warning mb-3">
-                                            <i class="fa-solid fa-pen-to-square"></i> 
-                                        </a>
-
-                                        <a href="{{ route('employers.show', $employer->id) }}" class="btn btn-info mb-3">
-                                            <i class="fas fa-eye"></i> 
-                                        </a>
-
-                                        <a href="{{ route('employers.add_overtime', $employer->id) }}" class="btn btn-primary mb-3">
-                                            <i class="fas fa-plus"></i>
-                                            <i class="fas fa-clock"></i>
-                                            <span class="badge bg-info ms-2">
-                                                {{ $employer->total_overtime ?? 0 }} h
-                                            </span>
-                                        </a>
-
-                                        <a href="{{ route('absences.show', $employer->id) }}" class="btn btn-success mb-3">
-                                            <i class="fas fa-minus"></i> <i class="fas fa-clock"></i> 
-                                            <span class="badge bg-info ms-2">
-                                                {{ $employer->total_absence_heures }} h
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3" class="text-center">Aucun employé trouvé.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-
-                    <div class="pagination justify-content-center mt-3">
-                        {{ $employers->links() }}
-                    </div>
-
-                    <!-- Total des heures d'absence -->
-                    <div class="text-center mt-3">
-                        <strong>Total des heures d'absence de tous les employés :</strong>
-                        <span class="badge bg-danger ms-2" id="total-absence-badge">{{ $totalAbsenceHeuresAll }} h</span>
-                    </div>
-
-                    <!-- Total des heures de travail -->
-                    <div class="text-center mt-3">
-                        <strong>Total des heures de travail de tous les employés (sur 30 jours) :</strong>
-                        <span class="badge bg-info ms-2">{{ $totalHeuresTravailAll }} h</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Montant Journalier -->
-    <div class="tab-pane fade" id="orders-daily" role="tabpanel" aria-labelledby="orders-daily-tab">
-        <div class="app-card app-card-orders-table shadow-sm mb-5">
-            <div class="app-card-body">
-                <div class="table-responsive">
-                    <table class="table app-table-hover mb-0 text-left">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Montant Journalier</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($employers as $employer)
-                                <tr>
-                                    <td>{{ $employer->id }}</td>
-                                    <td>{{ $employer->nom }}</td>
-                                    <td>{{ $employer->prenom }}</td>
-                                    <td>{{ number_format($employer->montant_journalier, 0, ',', ' ') }} Fcfa</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="4">Aucun employé trouvé.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-
-                    <div class="pagination justify-content-center mt-3">
-                        {{ $employers->links() }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
+@section('scripts')
 <script>
-    function searchEmployers() {
-        let searchQuery = document.getElementById('search').value;
-
-        // Envoi de la requête AJAX
-        fetch(`/employers/search?search=${searchQuery}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Mise à jour des résultats dans la page
-            let resultContainer = document.getElementById('employerResults');
-            resultContainer.innerHTML = ''; // Effacer les résultats précédents
-
-            if (data.employers.length > 0) {
-                data.employers.forEach(employer => {
-                    let employerElement = document.createElement('tr');
-                    employerElement.innerHTML = `
-                        <td class="cell">${employer.id}</td>
-                        <td class="cell">${employer.nom} ${employer.prenom}</td>
-                        <td class="cell">
-                            <a href="/employers/edit/${employer.id}" class="btn btn-warning mb-3">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            <a href="/employers/show/${employer.id}" class="btn btn-info mb-3">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                        </td>
-                    `;
-                    resultContainer.appendChild(employerElement);
-                });
-            } else {
-                resultContainer.innerHTML = '<tr><td colspan="3" class="text-center">Aucun employé trouvé.</td></tr>';
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    // Activation des tooltips Bootstrap
+    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    tooltips.forEach(t => new bootstrap.Tooltip(t))
+    
+    // Gestion automatique des filtres
+    document.querySelector('select[name="period"]').addEventListener('change', function() {
+        this.closest('form').submit()
+    })
+})
 </script>
+@endsection
 
 @endsection
